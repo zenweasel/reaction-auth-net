@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 reaction-paypal
 =============
 
@@ -57,3 +58,9 @@ For information on the **payment** object returned see [Paypal's Payment Option 
 
 
 Thanks to, and much borrowed from David Brear's [meteor-paypal](https://github.com/DavidBrear/meteor-paypal.git)
+=======
+reaction-auth-net
+=================
+
+Authorize.net payment package for Reaction
+>>>>>>> 7dd2c9dc2a8257105da40e64c932903bdd7a6af9
