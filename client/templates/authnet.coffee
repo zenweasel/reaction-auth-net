@@ -5,8 +5,8 @@ Template.authnet.helpers
 AutoForm.hooks "authnet-update-form":
   onSuccess: (operation, result, template) ->
     Alerts.removeSeen()
-    Alerts.add "Paypal settings saved.", "success"
+    Alerts.add "Authorize.net settings saved.", "success"
 
   onError: (operation, error, template) ->
     Alerts.removeSeen()
-    Alerts.add "Paypal settings update failed. " + error, "danger"
+    Alerts.add "Authorize.net settings update failed. " + error, "danger"

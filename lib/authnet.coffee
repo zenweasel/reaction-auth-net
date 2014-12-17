@@ -3,13 +3,14 @@ Meteor.AuthNet =
     settings = ReactionCore.Collections.Packages.findOne(name: "reaction-authnet").settings
     if settings?.mode is true then mode = "live" else mode = "sandbox"
     options =
-      mode: mode
-      client_id: settings?.client_id || Meteor.settings.authnet.client_id
-      client_secret: settings?.client_secret || Meteor.settings.authnet.client_secret
+      level: mode
+      login: settings?.client_id || Meteor.settings.authnet.client_id
+      tran_key: settings?.client_secret || Meteor.settings.authnet.client_secret
     return options
 
   #authorize submits a payment authorization to Paypal
   authorize: (cardInfo, paymentInfo, callback) ->
+    console.log(cardInfo + paymentInfo + callback)
     Meteor.call "authnetSubmit", "authorize", cardInfo, paymentInfo, callback
     return
 
@@ -17,6 +18,7 @@ Meteor.AuthNet =
   #   Meteor.call('authnetSubmit', 'sale', card_info, payment_info, callback);
   # },
   capture: (transactionId, amount, callback) ->
+    console.log("Capture Info: " + transactionId + amount + callback)
     captureDetails =
       amount:
         currency: "USD"
@@ -34,23 +36,23 @@ Meteor.AuthNet =
   paymentObj: ->
     intent: "sale"
     payer:
-      payment_method: "credit_card"
+      payment_method: "CC"
       funding_instruments: []
     transactions: []
 
-  #parseCardData splits up the card data and puts it into a authnet friendly format.
   parseCardData: (data) ->
-    credit_card:
-      type: data.type
-      number: data.number
-      first_name: data.first_name
-      last_name: data.last_name
-      cvv2: data.cvv2
-      expire_month: data.expire_month
-      expire_year: data.expire_year
+    console.log("Parsing card data:" + data)
+    type: data.type
+    number: data.number
+    first_name: data.first_name
+    last_name: data.last_name
+    cvv2: data.cvv2
+    expire_month: data.expire_month
+    expire_year: data.expire_year
 
   #parsePaymentData splits up the card data and gets it into a authnet friendly format.
   parsePaymentData: (data) ->
+    console.log("Parsing payment data: " + data.total + data.currency)
     amount:
       total: data.total
       currency: data.currency

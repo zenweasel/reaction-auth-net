@@ -22,7 +22,7 @@ paymentAlert = (errorMessage) ->
 hidePaymentAlert = () ->
   $(".alert").addClass("hidden").text('')
 
-handlePaypalSubmitError = (error) ->
+handleAuthNetSubmitError = (error) ->
   # Depending on what they are, errors come back from AuthNet in various formats
   singleError = error?.response?.error_description
   serverError = error?.response?.message
@@ -69,22 +69,26 @@ AutoForm.addHooks "authnet-payment-form",
     $(".list-group-item").removeClass("list-group-item")
 
     # Submit for processing
-    Meteor.Paypal.authorize form,
+    Meteor.AuthNet.authorize form,
       total: Session.get "cartTotal"
       currency: Shops.findOne().currency
-    , (error, transaction) ->
+    , (error, result) ->
+      console.log("entering form callback")
       submitting = false
       if error
+        console.log("Encountered an error.")
         # this only catches connection/authentication errors
-        handlePaypalSubmitError(error)
+        handleAuthNetSubmitError(error)
         # Hide processing UI
         uiEnd(template, "Resubmit payment")
         return
       else
+        console.log(result.payment.payer.payment_method)
         if transaction.saved is true #successful transaction
+          console.log("Transaction was successful.")
           # Format the transaction to store with order and submit to CartWorkflow
           paymentMethod =
-            processor: "Paypal"
+            processor: "AuthNet"
             storedCard: storedCard
             method: transaction.payment.payer.payment_method
             transactionId: transaction.payment.transactions[0].related_resources[0].authorization.id
@@ -94,6 +98,8 @@ AutoForm.addHooks "authnet-payment-form",
             createdAt: new Date(transaction.payment.create_time)
             updatedAt: new Date(transaction.payment.update_time)
 
+          console.log(paymentMethod)
+
           # Store transaction information with order
           # paymentMethod will auto transition to
           # CartWorkflow.paymentAuth() which
@@ -102,7 +108,7 @@ AutoForm.addHooks "authnet-payment-form",
           CartWorkflow.paymentMethod(paymentMethod)
           return
         else # card errors are returned in transaction
-          handlePaypalSubmitError(transaction.error)
+          handleAuthNetSubmitError(transaction.error)
           # Hide processing UI
           uiEnd(template, "Resubmit payment")
           return

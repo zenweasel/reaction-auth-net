@@ -5,7 +5,7 @@ Package.describe({
   git: "https://github.com/reactioncommerce/reaction-authnet.git"
 });
 
-Npm.depends({'auth-net-request': '2.1.0'});
+Npm.depends({'paynode': '0.3.6'});
 
 Package.onUse(function (api, where) {
   api.versionsFrom('METEOR@1.0');
