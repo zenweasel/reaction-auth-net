@@ -78,25 +78,26 @@ AutoForm.addHooks "authnet-payment-form",
       if error
         console.log("Encountered an error.")
         # this only catches connection/authentication errors
-        handleAuthNetSubmitError(error)
+        # handleAuthNetSubmitError(error)
         # Hide processing UI
         uiEnd(template, "Resubmit payment")
         return
       else
-        console.log(result.payment.payer.payment_method)
-        if transaction.saved is true #successful transaction
-          console.log("Transaction was successful.")
+        console.log result
+        if result.saved is true #successful transaction
+          transaction = result.result
+          console.log "Transaction was successful." + result.result
           # Format the transaction to store with order and submit to CartWorkflow
           paymentMethod =
             processor: "AuthNet"
-            storedCard: storedCard
-            method: transaction.payment.payer.payment_method
-            transactionId: transaction.payment.transactions[0].related_resources[0].authorization.id
-            amount: transaction.payment.transactions[0].amount.total
-            status: transaction.payment.state
-            mode: transaction.payment.intent
-            createdAt: new Date(transaction.payment.create_time)
-            updatedAt: new Date(transaction.payment.update_time)
+            storedCard: transaction.md5hash
+            method: transaction.method
+            transactionId: transaction.transactionid
+            # amount: transaction.payment.transactions[0].amount.total
+            # status: transaction.payment.state
+            # mode: transaction.payment.intent
+            # createdAt: new Date(transaction.payment.create_time)
+            # updatedAt: new Date(transaction.payment.update_time)
 
           console.log(paymentMethod)
 

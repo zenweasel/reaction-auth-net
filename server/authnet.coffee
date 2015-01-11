@@ -51,7 +51,7 @@ Meteor.methods
     , (e) ->
       console.error e
       return
-    # fut.wait()
+    fut.wait()
 
 
   # capture (existing authorization)

@@ -10,7 +10,6 @@ Meteor.AuthNet =
 
   #authorize submits a payment authorization to Paypal
   authorize: (cardInfo, paymentInfo, callback) ->
-    console.log(cardInfo + paymentInfo + callback)
     Meteor.call "authnetSubmit", "authorize", cardInfo, paymentInfo, callback
     return
 
