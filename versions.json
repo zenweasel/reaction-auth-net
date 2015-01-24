@@ -74,7 +74,7 @@
     ],
     [
       "cfs:access-point",
-      "0.1.1"
+      "0.0.0"
     ],
     [
       "cfs:base-package",
@@ -82,7 +82,7 @@
     ],
     [
       "cfs:collection",
-      "0.0.1"
+      "0.0.0"
     ],
     [
       "cfs:collection-filters",
@@ -90,11 +90,11 @@
     ],
     [
       "cfs:data-man",
-      "0.0.2"
+      "0.0.0"
     ],
     [
       "cfs:file",
-      "0.0.1"
+      "0.0.0"
     ],
     [
       "cfs:filesystem",
@@ -134,7 +134,7 @@
     ],
     [
       "cfs:standard-packages",
-      "0.0.3"
+      "0.0.2"
     ],
     [
       "cfs:storage-adapter",
@@ -350,7 +350,7 @@
     ],
     [
       "raix:eventemitter",
-      "0.0.2"
+      "0.0.1"
     ],
     [
       "raix:ui-dropped-event",
