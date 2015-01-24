@@ -12,11 +12,7 @@ Meteor.methods
     paymentObj.transactions.push Meteor.AuthNet.parsePaymentData(paymentData)
     console.log(paymentObj.transactions)
 
-    client = AuthNet.createClient(
-      level: AuthNet.levels.sandbox
-      login: "2CxyF7b3njd"
-      tran_key: "75Bm5295n53Rr5CA"
-    )
+    client = AuthNet.createClient Meteor.AuthNet.accountOptions()
 
     fut = new Future()
     @unblock()
@@ -46,7 +42,7 @@ Meteor.methods
       console.log("Encountered an error")
       fut.return
         saved: false
-        error: err
+        error: result.responsereasontext
       return
     , (e) ->
       console.error e

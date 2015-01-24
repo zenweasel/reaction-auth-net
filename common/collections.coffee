@@ -7,7 +7,7 @@
 #  see: https://github.com/authnet/rest-api-sdk-nodejs
 ###
 
-ReactionCore.Schemas.PaypalPackageConfig = new SimpleSchema([
+ReactionCore.Schemas.AuthNetPackageConfig = new SimpleSchema([
   ReactionCore.Schemas.PackageConfig
   {
     "settings.mode":
@@ -24,7 +24,7 @@ ReactionCore.Schemas.PaypalPackageConfig = new SimpleSchema([
   }
 ])
 
-ReactionCore.Schemas.PaypalPayment = new SimpleSchema
+ReactionCore.Schemas.AuthNetPayment = new SimpleSchema
   payerName:
     type: String
     label: "Cardholder name",
@@ -46,5 +46,5 @@ ReactionCore.Schemas.PaypalPayment = new SimpleSchema
     max: 4
     label: "CVV"
 
-ReactionCore.Schemas.PaypalPayment.messages
+ReactionCore.Schemas.AuthNetPayment.messages
   "regEx payerName": "[label] must include both first and last name"

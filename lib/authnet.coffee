@@ -1,14 +1,14 @@
 Meteor.AuthNet =
   accountOptions: ->
-    settings = ReactionCore.Collections.Packages.findOne(name: "reaction-authnet").settings
-    if settings?.mode is true then mode = "live" else mode = "sandbox"
+    settings = ReactionCore.Collections.Packages.findOne("name" : "reaction-auth-net").settings
+    if settings?.mode is true then mode = 'secure.authorize.net' else mode = 'test.authorize.net'
     options =
       level: mode
       login: settings?.client_id || Meteor.settings.authnet.client_id
       tran_key: settings?.client_secret || Meteor.settings.authnet.client_secret
     return options
 
-  #authorize submits a payment authorization to Paypal
+  #authorize submits a payment authorization to AuthNet
   authorize: (cardInfo, paymentInfo, callback) ->
     Meteor.call "authnetSubmit", "authorize", cardInfo, paymentInfo, callback
     return

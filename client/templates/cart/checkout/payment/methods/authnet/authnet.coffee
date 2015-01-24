@@ -1,5 +1,3 @@
-Template.authnetPaymentForm.replaces("paymentMethodsCards")
-
 getCardType = (number) ->
   re = new RegExp("^4")
   return "visa"  if number.match(re)?
@@ -24,7 +22,7 @@ hidePaymentAlert = () ->
 
 handleAuthNetSubmitError = (error) ->
   # Depending on what they are, errors come back from AuthNet in various formats
-  singleError = error?.response?.error_description
+  singleError = error
   serverError = error?.response?.message
   errors = error?.response?.details || []
   if singleError
@@ -72,10 +70,10 @@ AutoForm.addHooks "authnet-payment-form",
     Meteor.AuthNet.authorize form,
       total: Session.get "cartTotal"
       currency: Shops.findOne().currency
-    , (error, result) ->
+    , (err, result) ->
       console.log("entering form callback")
       submitting = false
-      if error
+      if err
         console.log("Encountered an error.")
         # this only catches connection/authentication errors
         # handleAuthNetSubmitError(error)
@@ -93,11 +91,11 @@ AutoForm.addHooks "authnet-payment-form",
             storedCard: transaction.md5hash
             method: transaction.method
             transactionId: transaction.transactionid
-            # amount: transaction.payment.transactions[0].amount.total
-            # status: transaction.payment.state
-            # mode: transaction.payment.intent
-            # createdAt: new Date(transaction.payment.create_time)
-            # updatedAt: new Date(transaction.payment.update_time)
+          # amount: transaction.payment.transactions[0].amount.total
+          # status: transaction.payment.state
+          # mode: transaction.payment.intent
+          # createdAt: new Date(transaction.payment.create_time)
+          # updatedAt: new Date(transaction.payment.update_time)
 
           console.log(paymentMethod)
 
@@ -109,7 +107,7 @@ AutoForm.addHooks "authnet-payment-form",
           CartWorkflow.paymentMethod(paymentMethod)
           return
         else # card errors are returned in transaction
-          handleAuthNetSubmitError(transaction.error)
+          handleAuthNetSubmitError(err)
           # Hide processing UI
           uiEnd(template, "Resubmit payment")
           return

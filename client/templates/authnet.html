@@ -4,9 +4,9 @@
 </div>
 <div class="row">
   <div class="col-md-6 well">
-    {{#autoForm collection="ReactionCore.Collections.Packages" schema="ReactionCore.Schemas.PaypalPackageConfig" doc=packageData type="update" id="authnet-update-form"}}
+    {{#autoForm collection="ReactionCore.Collections.Packages" schema="ReactionCore.Schemas.AuthNetPackageConfig" doc=packageData type="update" id="authnet-update-form"}}
       <div class="form-group">
-      	Don't have a AuthNet client ID and secret? <a href="https://developer.authnet.com/webapps/developer/applications" target="_blank">Get them here.</a>
+      	Don't have a AuthNet client ID and secret? <a href="https://sandbox.authorize.net/" target="_blank">Get them here.</a>
       </div>
       {{>afQuickField name='settings.client_id'}}
       {{>afQuickField name='settings.client_secret' type="password"}}

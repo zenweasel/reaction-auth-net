@@ -1,6 +1,7 @@
 ReactionCore.registerPackage
-  name: 'reaction-authnet'
+  name: 'reaction-auth-net'
   provides: ['paymentMethod']
+  paymentTemplate: "authnetPaymentForm"
   label: 'AuthNet'
   description: 'Accept AuthNet'
   icon: 'fa fa-shopping-cart'
@@ -10,8 +11,7 @@ ReactionCore.registerPackage
     client_id: ""
     client_secret: ""
   priority: '2'
-  hasWidget: false
-  autoEnable: true
+  hasWidget: true
   shopPermissions: [
     {
       label: "Authorize.net"
