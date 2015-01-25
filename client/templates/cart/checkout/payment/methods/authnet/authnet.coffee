@@ -62,10 +62,6 @@ AutoForm.addHooks "authnet-payment-form",
     # Reaction only stores type and 4 digits
     storedCard = form.type.charAt(0).toUpperCase() + form.type.slice(1) + " " + doc.cardNumber.slice(-4)
 
-    # Order Layout
-    $(".list-group a").css("text-decoration", "none")
-    $(".list-group-item").removeClass("list-group-item")
-
     # Submit for processing
     Meteor.AuthNet.authorize form,
       total: Session.get "cartTotal"
