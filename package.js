@@ -2,7 +2,7 @@ Package.describe({
   summary: "Reaction Authorize.net - Authorize.net payments for Reaction Commerce",
   name: "reactioncommerce:reaction-auth-net",
   version: "0.0.1",
-  git: "https://github.com/reactioncommerce/reaction-authnet.git"
+  git: "https://github.com/taylorsmithgg/reaction-auth-net"
 });
 
 Npm.depends({'paynode': '0.3.6'});
