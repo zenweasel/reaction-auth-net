@@ -2,9 +2,9 @@ ReactionCore.registerPackage
   name: 'reaction-auth-net'
   provides: ['paymentMethod']
   paymentTemplate: "authnetPaymentForm"
-  label: 'AuthNet'
-  description: 'Accept AuthNet'
-  icon: 'fa fa-shopping-cart'
+  label: 'Authorize.net'
+  description: 'Accept Authorize.net payments'
+  icon: 'fa fa-credit-card'
   settingsRoute: 'authnet'
   defaultSettings:
     mode: false
