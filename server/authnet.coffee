@@ -5,12 +5,12 @@ Future = Npm.require("fibers/future")
 Meteor.methods
   #submit (sale, authorize)
   authnetSubmit: (transactionType, cardData, paymentData) ->
-    console.log("authnetSubmit: " + transactionType + cardData + paymentData)
+    ReactionCore.Events.info("authnetSubmit: " + transactionType + cardData + paymentData)
     paymentObj = Meteor.AuthNet.paymentObj()
     paymentObj.intent = transactionType
     paymentObj.payer.funding_instruments.push Meteor.AuthNet.parseCardData(cardData)
     paymentObj.transactions.push Meteor.AuthNet.parsePaymentData(paymentData)
-    console.log(paymentObj.transactions)
+    ReactionCore.Events.info paymentObj.transactions
 
     client = AuthNet.createClient Meteor.AuthNet.accountOptions()
 
@@ -29,7 +29,7 @@ Meteor.methods
       x_state: "WA"
       x_zip: "98004"
     ).on("success", (err, result) ->
-      console.log("Processed successfully.")
+      ReactionCore.Events.info "Processed successfully."
       fut.return
         saved: true
         result: result
@@ -39,7 +39,7 @@ Meteor.methods
       return
     # fut.wait()
     ).on "failure", (err, result) ->
-      console.log("Encountered an error")
+      ReactionCore.Events.warn "Encountered an error"
       fut.return
         saved: false
         error: result.responsereasontext
@@ -52,7 +52,7 @@ Meteor.methods
 
   # capture (existing authorization)
   authnetCapture: (transactionId, captureDetails) ->
-    console.log("Capture Info: " + transactionId, captureDetails)
+    ReactionCore.Events.info ("Capture Info: " + transactionId, captureDetails)
     client = AuthNet.createClient(
       level: AuthNet.levels.sandbox
       login: "2CxyF7b3njd"

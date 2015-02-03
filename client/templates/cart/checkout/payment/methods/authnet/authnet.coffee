@@ -64,7 +64,7 @@ AutoForm.addHooks "authnet-payment-form",
 
     # Submit for processing
     Meteor.AuthNet.authorize form,
-      total: Session.get "cartTotal"
+      total: ReactionCore.Collections.Cart.findOne().cartTotal()
       currency: Shops.findOne().currency
     , (err, result) ->
       console.log("entering form callback")
