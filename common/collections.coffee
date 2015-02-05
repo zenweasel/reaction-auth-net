@@ -13,13 +13,13 @@ ReactionCore.Schemas.AuthNetPackageConfig = new SimpleSchema([
     "settings.mode":
       type: Boolean
       defaultValue: false
-    "settings.client_id":
+    "settings.api_id":
       type: String
-      label: "API Client ID"
+      label: "API Login ID"
       min: 60
-    "settings.client_secret":
+    "settings.transaction_key":
       type: String
-      label: "API Secret"
+      label: "Transaction Key"
       min: 60
   }
 ])
