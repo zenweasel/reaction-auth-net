@@ -1,14 +1,3 @@
-getCardType = (number) ->
-  re = new RegExp("^4")
-  return "visa"  if number.match(re)?
-  re = new RegExp("^(34|37)")
-  return "amex"  if number.match(re)?
-  re = new RegExp("^5[1-5]")
-  return "mastercard"  if number.match(re)?
-  re = new RegExp("^6011")
-  return "discover"  if number.match(re)?
-  ""
-
 uiEnd = (template, buttonText) ->
   template.$(":input").removeAttr("disabled")
   template.$("#btn-complete-order").text(buttonText)
@@ -21,19 +10,8 @@ hidePaymentAlert = () ->
   $(".alert").addClass("hidden").text('')
 
 handleAuthNetSubmitError = (error) ->
-  # Depending on what they are, errors come back from AuthNet in various formats
-  singleError = error
-  serverError = error?.response?.message
-  errors = error?.response?.details || []
-  if singleError
-    paymentAlert("Oops! " + singleError)
-  else if errors.length
-    for error in errors
-      formattedError = "Oops! " + error.issue + ": " + error.field.split(/[. ]+/).pop().replace(/_/g,' ')
-      paymentAlert(formattedError)
-  else if serverError
-    paymentAlert("Oops! " + serverError)
-
+  # TODO - this error handling needs to be reworked for the Authorize.net API
+  console.log error
 
 # used to track asynchronous submitting for UI changes
 submitting = false
@@ -53,8 +31,7 @@ AutoForm.addHooks "authnet-payment-form",
       first_name: payerNamePieces[0]
       last_name: payerNamePieces[1]
       number: doc.cardNumber
-      expire_month: doc.expireMonth
-      expire_year: doc.expireYear
+      expire_date: doc.expireMonth.toString() + doc.expireYear.slice(-2)
       cvv2: doc.cvv
       type: getCardType(doc.cardNumber)
     }
@@ -66,34 +43,42 @@ AutoForm.addHooks "authnet-payment-form",
     Meteor.AuthNet.authorize form,
       total: ReactionCore.Collections.Cart.findOne().cartTotal()
       currency: Shops.findOne().currency
-    , (err, result) ->
+    , (error, transaction) ->
       console.log("entering form callback")
       submitting = false
-      if err
-        console.log("Encountered an error.")
+      if error
         # this only catches connection/authentication errors
-        # handleAuthNetSubmitError(error)
+        handlePaypalSubmitError(error)
         # Hide processing UI
         uiEnd(template, "Resubmit payment")
         return
       else
-        console.log result
-        if result.saved is true #successful transaction
-          transaction = result.result
-          console.log "Transaction was successful." + result.result
+        if transaction.saved is true #successful transaction
+
+          # Normalize status
+          normalizedStatus = switch transaction.response.responsecode
+            when "1" then "created"
+            else "failed"
+
+          # Normalize mode
+          normalizedMode = switch transaction.response.transactiontype
+            when "auth_only" then "authorize"
+            else "capture"
+
           # Format the transaction to store with order and submit to CartWorkflow
           paymentMethod =
             processor: "AuthNet"
-            storedCard: transaction.md5hash
-            method: transaction.method
-            transactionId: transaction.transactionid
-          # amount: transaction.payment.transactions[0].amount.total
-          # status: transaction.payment.state
-          # mode: transaction.payment.intent
-          # createdAt: new Date(transaction.payment.create_time)
-          # updatedAt: new Date(transaction.payment.update_time)
-
-          console.log(paymentMethod)
+            storedCard: transaction.response.md5hash
+            method: transaction.response.method
+            transactionId: transaction.response.transactionid
+            authorizationCode: transaction.response.authorizationcode
+            amount: transaction.response.amount
+            status: normalizedStatus
+            mode: normalizedMode
+            createdAt: new Date()
+            updatedAt: new Date()
+            transactions: []
+          paymentMethod.transactions.push transaction.response
 
           # Store transaction information with order
           # paymentMethod will auto transition to
@@ -103,7 +88,7 @@ AutoForm.addHooks "authnet-payment-form",
           CartWorkflow.paymentMethod(paymentMethod)
           return
         else # card errors are returned in transaction
-          handleAuthNetSubmitError(err)
+          handleAuthNetSubmitError(error)
           # Hide processing UI
           uiEnd(template, "Resubmit payment")
           return

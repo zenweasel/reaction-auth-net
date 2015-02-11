@@ -1,7 +1,7 @@
 Package.describe({
   summary: "Reaction Authorize.net - Authorize.net payments for Reaction Commerce",
   name: "reactioncommerce:reaction-auth-net",
-  version: "0.0.1",
+  version: "0.1.0",
   git: "https://github.com/taylorsmithgg/reaction-auth-net"
 });
 
@@ -9,10 +9,10 @@ Npm.depends({'paynode': '0.3.6'});
 
 Package.onUse(function (api, where) {
   api.versionsFrom('METEOR@1.0');
-  api.use("meteor-platform");
+  api.use("meteor-platform@1.2.1");
   api.use("coffeescript");
   api.use("less");
-  api.use("reactioncommerce:core@0.2.2");
+  api.use("reactioncommerce:core@0.3.0");
 
   api.add_files([
     "common/register.coffee",
@@ -26,7 +26,6 @@ Package.onUse(function (api, where) {
     "client/templates/authnet.less",
     "client/templates/authnet.coffee",
     "client/templates/cart/checkout/payment/methods/authnet/authnet.html",
-    "client/templates/cart/checkout/payment/methods/authnet/authnet.less",
     "client/templates/cart/checkout/payment/methods/authnet/authnet.coffee"
   ],
   ["client"]);
