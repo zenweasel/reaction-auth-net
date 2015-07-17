@@ -48,7 +48,7 @@ AutoForm.addHooks "authnet-payment-form",
       submitting = false
       if error
         # this only catches connection/authentication errors
-        handlePaypalSubmitError(error)
+        handleAuthNetSubmitError(error)
         # Hide processing UI
         uiEnd(template, "Resubmit payment")
         return

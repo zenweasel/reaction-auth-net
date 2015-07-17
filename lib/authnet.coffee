@@ -4,8 +4,9 @@ Meteor.AuthNet =
     if settings?.mode is true then mode = 'secure.authorize.net' else mode = 'test.authorize.net'
     options =
       level: mode
-      login: settings?.client_id || Meteor.settings.authnet.client_id
-      tran_key: settings?.client_secret || Meteor.settings.authnet.client_secret
+      login: settings?.client_id || Meteor.settings.authnet?.client_id
+      tran_key: settings?.client_secret || Meteor.settings.authnet?.client_secret
+    unless options.login then throw new Meteor.Error 403, "Invalid Authnet Credentials"
     return options
 
   #authorize submits a payment authorization to AuthNet
