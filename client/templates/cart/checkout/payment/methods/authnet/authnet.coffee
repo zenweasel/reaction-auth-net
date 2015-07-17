@@ -95,11 +95,11 @@ AutoForm.addHooks "authnet-payment-form",
 
     return false;
 
-  beginSubmit: (formId, template) ->
+  beginSubmit: () ->
     # Show Processing
-    template.$(":input").attr("disabled", true)
-    template.$("#btn-complete-order").text("Submitting ")
-    template.$("#btn-processing").removeClass("hidden")
+    this.template.$(":input").attr("disabled", true)
+    this.template.$("#btn-complete-order").text("Submitting ")
+    this.template.$("#btn-processing").removeClass("hidden")
   endSubmit: (formId, template) ->
     # Hide processing UI here if form was not valid
-    uiEnd(template, "Complete your order") if not submitting
+    uiEnd(this.template, "Complete your order") if not submitting
