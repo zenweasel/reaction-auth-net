@@ -85,7 +85,7 @@ AutoForm.addHooks "authnet-payment-form",
           # CartWorkflow.paymentAuth() which
           # will create order, clear the cart, and update inventory,
           # and goto order confirmation page
-          CartWorkflow.paymentMethod(paymentMethod)
+          Meteor.call "cart/processPayment", paymentMethod
           return
         else # card errors are returned in transaction
           handleAuthNetSubmitError(error)
