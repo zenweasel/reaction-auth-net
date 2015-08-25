@@ -1,4 +1,5 @@
 ReactionCore.registerPackage({
+  label: "Authorize.net",
   name: 'reaction-auth-net',
   autoEnable: false,
   settings: {

@@ -1,6 +1,6 @@
 Router.map(function() {
   return this.route('authnet', {
-    controller: ShopAdminController,
+    controller: ShopSettingsController,
     path: 'dashboard/settings/authnet',
     template: 'authnet',
     waitOn: function() {
