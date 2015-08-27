@@ -1,4 +1,4 @@
-Template.authnet.helpers({
+Template.authnetSettings.helpers({
   packageData: function() {
     return ReactionCore.Collections.Packages.findOne({
       name: "reaction-auth-net"

@@ -16,9 +16,11 @@ ReactionCore.registerPackage({
       cycle: '4',
       container: 'dashboard'
     }, {
+      label: 'Authorize.net Settings',
       route: 'authnet',
       provides: 'settings',
-      container: 'dashboard'
+      container: 'dashboard',
+      template: 'authnetSettings'
     }, {
       template: 'authnetPaymentForm',
       provides: 'paymentMethod'
