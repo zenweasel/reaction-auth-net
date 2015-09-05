@@ -1,6 +1,7 @@
 ReactionCore.registerPackage({
   label: "Authorize.net",
   name: 'reaction-auth-net',
+  icon: 'fa fa-credit-card',
   autoEnable: false,
   settings: {
     mode: false,
