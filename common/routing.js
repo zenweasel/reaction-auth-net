@@ -1,5 +1,5 @@
 Router.map(function() {
-  return this.route('authnet', {
+  return this.route('dashboard/authnet', {
     controller: ShopSettingsController,
     path: 'dashboard/settings/authnet',
     template: 'authnet',

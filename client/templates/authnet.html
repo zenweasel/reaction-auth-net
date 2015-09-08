@@ -1,11 +1,56 @@
 <template name="authnetSettings">
-  {{#autoForm collection="ReactionCore.Collections.Packages" schema="ReactionCore.Schemas.AuthNetPackageConfig" doc=packageData type="update" id="authnet-update-form"}}
-    <div class="form-group">
-    	Don't have a AuthNet API Login ID and Transaction Key? <a href="https://sandbox.authorize.net/" target="_blank">Get them here.</a>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title"></div>
+      Don't have a AuthNet API Login ID and Transaction Key? <a href="https://sandbox.authorize.net/" target="_blank">Get them here.</a>
     </div>
-    {{>afQuickField name='settings.api_id'}}
-    {{>afQuickField name='settings.transaction_key' type="password"}}
-    {{>afQuickField name='settings.mode' type="boolean-select" trueLabel="Live - Production Mode" falseLabel="Testing - Sandbox Mode" style="width: auto"}}
-    <button type="submit" class="btn btn-primary pull-right">Update</button>
-  {{/autoForm}}
+    <div class="panel-body">
+      {{#autoForm collection="ReactionCore.Collections.Packages" schema="ReactionCore.Schemas.AuthNetPackageConfig" doc=packageData type="update" id="authnet-update-form"}}
+
+
+      {{>afQuickField name='settings.api_id'}}
+      {{>afQuickField name='settings.transaction_key' type="password"}}
+      {{>afQuickField name='settings.mode' type="boolean-select" trueLabel="Live - Production Mode" falseLabel="Testing - Sandbox Mode" style="width: auto"}}
+      <button type="submit" class="btn btn-primary pull-right">Update</button>
+      {{/autoForm}}
+    </div>
+  </div>
+</template>
+
+
+<template name="authnet">
+  <div class="container-fluid-sm">  
+  <div class="flex">
+    
+    <div class="flex-item">
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>Auth.net Checkout</h4>
+      </div>
+      <div class="list-group">
+        <div class="list-group-item">
+          {{#autoForm collection="ReactionCore.Collections.Packages" schema="ReactionCore.Schemas.AuthNetPackageConfig" doc=packageData type="update" id="authnet-update-form-quick" autosave=true}}
+        {{>afQuickField name='settings.mode' type="boolean-select" trueLabel="Live - Production Mode" falseLabel="Testing - Sandbox Mode" style="width: auto"}}
+
+          {{/autoForm}}
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <div class="left"></div>
+      <div class="right">
+      <div class="panel-footer-item">
+        <button class="btn btn-default" data-event-action="showPackageSettings">
+        <i class="fa fa-gear"></i>
+        </button>
+      </div>
+      </div>
+    </div>
+
+
+    </div>
+
+  </div>
+  </div>  
 </template>

@@ -1,7 +1,7 @@
 ReactionCore.registerPackage({
   label: "Authorize.net",
-  name: 'reaction-auth-net',
-  icon: 'fa fa-credit-card',
+  name: "reaction-auth-net",
+  icon: "fa fa-credit-card",
   autoEnable: false,
   settings: {
     mode: false,
@@ -10,21 +10,22 @@ ReactionCore.registerPackage({
   },
   registry: [
     {
-      provides: 'dashboard',
-      label: 'Authorize.net',
+      provides: "dashboard",
+      label: "Authorize.net",
       description: "Accept Authorize.net Payments",
-      icon: 'fa fa-credit-card',
-      cycle: '4',
-      container: 'dashboard'
+      route: "dashboard/authnet",
+      icon: "fa fa-credit-card",
+      cycle: "4",
+      container: "dashboard"
     }, {
-      label: 'Authorize.net Settings',
-      route: 'authnet',
-      provides: 'settings',
-      container: 'dashboard',
-      template: 'authnetSettings'
+      label: "Authorize.net Settings",
+      route: "dashboard/authnet",
+      provides: "settings",
+      container: "dashboard",
+      template: "authnetSettings"
     }, {
-      template: 'authnetPaymentForm',
-      provides: 'paymentMethod'
+      template: "authnetPaymentForm",
+      provides: "paymentMethod"
     }
   ],
   permissions: [
