@@ -44,7 +44,6 @@ AutoForm.addHooks "authnet-payment-form",
       total: ReactionCore.Collections.Cart.findOne().cartTotal()
       currency: Shops.findOne().currency
     , (error, transaction) ->
-      console.log("entering form callback")
       submitting = false
       if error
         # this only catches connection/authentication errors
