@@ -5,7 +5,7 @@ Future = Npm.require("fibers/future")
 Meteor.methods
   #submit (sale, authorize)
   authnetSubmit: (transactionType, cardData, paymentData) ->
-    ReactionCore.Events.info("authnetSubmit: " + transactionType + cardData + paymentData)
+    ReactionCore.Log.info("authnetSubmit: " + transactionType + cardData + paymentData)
     paymentObj = Meteor.AuthNet.paymentObj(cardData, paymentData)
 
     client = AuthNet.createClient Meteor.AuthNet.accountOptions()
@@ -13,7 +13,7 @@ Meteor.methods
     fut = new Future()
     @unblock()
     client.performAimTransaction(paymentObj).on("success", (error, result) ->
-      ReactionCore.Events.info "Processed successfully."
+      ReactionCore.Log.info "Processed successfully."
       fut.return
         saved: true
         response: result
@@ -23,7 +23,7 @@ Meteor.methods
       return
     # fut.wait()
     ).on "failure", (error, result) ->
-      ReactionCore.Events.warn "Encountered an error"
+      ReactionCore.Log.warn "Encountered an error"
       fut.return
         saved: false
         error: result.responsereasontext
@@ -36,14 +36,14 @@ Meteor.methods
 
   # capture (existing authorization)
   authnetCapture: (captureDetails) ->
-    ReactionCore.Events.info ("Capture Info: " + transactionId + captureDetails)
+    ReactionCore.Log.info ("Capture Info: " + transactionId + captureDetails)
 
     client = AuthNet.createClient Meteor.AuthNet.accountOptions()
 
     fut = new Future()
     @unblock()
     client.performAimTransaction(captureDetails).on("success", (error, result) ->
-      ReactionCore.Events.info "Processed successfully."
+      ReactionCore.Log.info "Processed successfully."
       fut.return
         saved: true
         response: result
@@ -53,7 +53,7 @@ Meteor.methods
       return
     # fut.wait()
     ).on "failure", (error, result) ->
-      ReactionCore.Events.warn "Encountered an error"
+      ReactionCore.Log.warn "Encountered an error"
       fut.return
         saved: false
         error: result.responsereasontext
