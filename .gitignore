@@ -1,3 +1,5 @@
 .build*
 .versions
 version.json
+
+.DS_Store

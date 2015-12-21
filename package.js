@@ -5,10 +5,10 @@ Package.describe({
   git: "https://github.com/reactioncommerce/reaction-auth-net"
 });
 
-Npm.depends({'paynode': '0.3.6'});
+Npm.depends({"node-authorize-net": "0.0.5"});
 
 Package.onUse(function (api, where) {
-  api.versionsFrom('METEOR@1.2');
+  api.versionsFrom("METEOR@1.2");
 
   // meteor base packages
   api.use("standard-minifiers");
@@ -29,25 +29,25 @@ Package.onUse(function (api, where) {
   // meteor add-on packages
 
   api.use("less");
-  api.use("coffeescript");
   api.use("reactioncommerce:core@0.8.0");
 
-  api.addFiles("server/register.coffee",["server"]); // register as a reaction package
-  api.addFiles("server/authnet.coffee",["server"]);
+  api.addFiles("server/register.js", ["server"]); // register as a reaction package
+  api.addFiles("server/authnet.js", ["server"]);
 
   api.addFiles([
-    "common/routing.coffee",
-    "common/collections.coffee",
-    "lib/authnet.coffee"
-  ],["client","server"]);
+    "common/router.js",
+    "common/collections.js",
+    "lib/authnet.js"
+  ], ["client", "server"]);
 
   api.addFiles([
-    "client/templates/authnet.html",
     "client/templates/authnet.less",
-    "client/templates/authnet.coffee",
     "client/templates/cart/checkout/payment/methods/authnet/authnet.html",
-    "client/templates/cart/checkout/payment/methods/authnet/authnet.coffee"
+    "client/templates/cart/checkout/payment/methods/authnet/authnet.js",
+    "client/templates/settings/settings.html",
+    "client/templates/settings/settings.js",
+    "client/templates/dashboard/dashboard.html",
+    "client/templates/dashboard/dashboard.js"
   ],
   ["client"]);
-
 });
