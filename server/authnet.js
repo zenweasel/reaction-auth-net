@@ -3,9 +3,9 @@
 const AuthNet = Npm.require("node-authorize-net");
 
 Meteor.methods({
-  authnetSubmit: function (amount, cardData) {
-    check(amount, String);
-    check(cardData, Object);
+  authnetSubmit: function (cardInfo, paymentInfo) {
+    check(cardInfo, Object);
+    check(paymentInfo, Object);
 
     let {
       login,
@@ -15,10 +15,11 @@ Meteor.methods({
       cardNumber,
       expirationYear,
       expirationMonth
-    } = cardData;
+    } = cardInfo;
+    let { total } = paymentInfo;
     const authnetService = new AuthNet(login, tran_key);
 
-    return authnetService.authCaptureTransaction(amount,
+    return authnetService.authCaptureTransaction(total,
       cardNumber,
       expirationYear,
       expirationMonth

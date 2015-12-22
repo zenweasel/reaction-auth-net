@@ -24,15 +24,19 @@ AutoForm.addHooks("authnet-payment-form", {
 
     hidePaymentAlert();
 
-    let amount = ReactionCore.Collections.Cart.findOne().cartTotal();
+    let paymentInfo = {
+      total: ReactionCore.Collections.Cart.findOne().cartTotal(),
+      currency: ReactionCore.Collections.Shops.findOne().currency
+    };
 
     // Submit for processing
-    Meteor.AuthNet.authorize(amount,
+    Meteor.AuthNet.authorize(
       {
         cardNumber: doc.cardNumber,
         expirationYear: doc.expireYear,
         expirationMonth: doc.expireMonth
       },
+      paymentInfo,
       function (error, transaction) {
         if (error) {
           console.log(error);
@@ -52,7 +56,7 @@ AutoForm.addHooks("authnet-payment-form", {
             transactionId: transaction.transactionResponse.transId.toString(),
             // Schema changed
             // authorizationCode: transaction.transactionResponse.authCode,
-            amount: +amount,
+            amount: +paymentInfo.total,
             status: normalizedStatus,
             mode: normalizedMode,
             createdAt: new Date(),
