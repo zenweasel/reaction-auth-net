@@ -1,8 +1,14 @@
+/* eslint camelcase: 0 */
+
 ReactionCore.registerPackage({
   label: "Authorize.net",
   name: "reaction-auth-net",
   icon: "fa fa-credit-card",
   autoEnable: false,
+  settings: {
+    api_id: "",
+    transaction_key: ""
+  },
   registry: [
     // Dashboard card
     {
@@ -20,7 +26,7 @@ ReactionCore.registerPackage({
       provides: "settings",
       label: "Authorize.net Settings",
       route: "dashboard/authnet",
-      container: "reaction-auth-net",
+      container: "dashboard",
       template: "authnetSettings"
     },
 
