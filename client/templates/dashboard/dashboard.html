@@ -6,30 +6,6 @@
           <div class="panel-title">Authorize.net Checkout</div>
         </div>
         <div class="list-group">
-          {{#autoForm
-            collection="ReactionCore.Collections.Packages"
-            schema="ReactionCore.Schemas.AuthNetPackageConfig"
-            doc=packageData
-            type="update"
-            id="authnet-update-quick-form"
-            autosave=true
-          }}
-          <!-- <div class="list-group">
-            {{>afQuickField name="settings.api_id"}}
-          </div>
-          <div class="list-group">
-            {{>afQuickField name="settings.transaction_key"}}
-          </div> -->
-          <div class="list-group">
-            {{>afQuickField
-              name="settings.mode"
-              type="boolean-select"
-              trueLabel="Live - Production Mode"
-              falseLabel="Testing - Sandbox Mode"
-              style="width: auto"
-            }}
-          </div>
-          {{/autoForm}}
         </div>
       </div>
     </div>
