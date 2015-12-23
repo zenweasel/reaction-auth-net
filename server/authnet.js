@@ -7,17 +7,15 @@ Meteor.methods({
     check(cardInfo, Object);
     check(paymentInfo, Object);
 
-    let {
-      login,
-      tran_key
-    } = Meteor.AuthNet.accountOptions();
-    let {
+    this.unblock();
+
+    const {
       cardNumber,
       expirationYear,
       expirationMonth
     } = cardInfo;
-    let { total } = paymentInfo;
-    const authnetService = new AuthNet(login, tran_key);
+    const { total } = paymentInfo;
+    const authnetService = getAuthnetService(Meteor.AuthNet.accountOptions());
 
     return authnetService.authCaptureTransaction(total,
       cardNumber,
@@ -26,3 +24,12 @@ Meteor.methods({
     );
   }
 });
+
+function getAuthnetService(accountOptions) {
+  const {
+    login,
+    tran_key
+  } = accountOptions;
+
+  return new AuthNet(login, tran_key);
+}
