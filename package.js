@@ -5,7 +5,7 @@ Package.describe({
   git: "https://github.com/reactioncommerce/reaction-auth-net"
 });
 
-Npm.depends({"node-authorize-net": "0.0.5"});
+Npm.depends({"authorize-net": "1.0.6"});
 
 Package.onUse(function (api, where) {
   api.versionsFrom("METEOR@1.2");

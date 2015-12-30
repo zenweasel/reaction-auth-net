@@ -20,49 +20,51 @@ AutoForm.addHooks("authnet-payment-form", {
     };
 
     // Reaction only stores type and 4 digits
-    let storedCard = form.type.charAt(0).toUpperCase() + form.type.slice(1) + " " + doc.cardNumber.slice(-4);
+    const storedCard = form.type.charAt(0).toUpperCase() + form.type.slice(1) + " " + doc.cardNumber.slice(-4);
 
     hidePaymentAlert();
 
-    let paymentInfo = {
+    const cardInfo = {
+      cardNumber: doc.cardNumber,
+      expirationYear: doc.expireYear,
+      expirationMonth: doc.expireMonth,
+      cvv2: doc.cvv
+    };
+    const paymentInfo = {
       total: ReactionCore.Collections.Cart.findOne().cartTotal(),
       currency: ReactionCore.Collections.Shops.findOne().currency
     };
 
     // Submit for processing
     Meteor.AuthNet.authorize(
-      {
-        cardNumber: doc.cardNumber,
-        expirationYear: doc.expireYear,
-        expirationMonth: doc.expireMonth
-      },
+      cardInfo,
       paymentInfo,
       function (error, transaction) {
-        if (error) {
-          console.log(error);
+        if (error || !transaction) {
+          ReactionCore.Log.warn(error);
           uiEnd(tpl, "Resubmit payment");
         } else {
+          let normalizedMode = "authorize";
           let normalizedStatus = "failed";
-          if (transaction.transactionResponse.responseCode === "1") {
+
+          const transId = transaction.transactionId[0].toString();
+
+          if (transaction._original.responseCode === "1") {
             normalizedStatus = "created";
           }
-
-          let normalizedMode = "authorize";
 
           let paymentMethod = {
             processor: "AuthNet",
             storedCard: storedCard,
             method: "method", // TODO investigate what it is
-            transactionId: transaction.transactionResponse.transId.toString(),
-            // Schema changed
-            // authorizationCode: transaction.transactionResponse.authCode,
+            transactionId: transId,
             amount: +paymentInfo.total,
             status: normalizedStatus,
             mode: normalizedMode,
             createdAt: new Date(),
             updatedAt: new Date(),
             transactions: [
-              transaction
+              transaction._original
             ]
           };
 

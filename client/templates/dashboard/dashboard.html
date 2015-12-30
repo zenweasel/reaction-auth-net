@@ -22,6 +22,10 @@
               dataEventAction="showAuthnetSettings"
             }}
           </div>
+
+          <div class="list-group-item">
+            <span>Mode: {{#if packageData.settings.mode}}Live{{else}}Test{{/if}}</span>
+          </div>
         </div>
 
         <div class="panel-footer">

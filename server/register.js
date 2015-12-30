@@ -7,7 +7,8 @@ ReactionCore.registerPackage({
   autoEnable: false,
   settings: {
     api_id: "",
-    transaction_key: ""
+    transaction_key: "",
+    mode: false
   },
   registry: [
     // Dashboard card
