@@ -29,7 +29,7 @@ Package.onUse(function (api, where) {
   // meteor add-on packages
 
   api.use("less");
-  api.use("reactioncommerce:core@0.8.0");
+  api.use("reactioncommerce:core@0.10.2");
 
   api.addFiles("server/register.js", ["server"]); // register as a reaction package
   api.addFiles("server/authnet.js", ["server"]);
