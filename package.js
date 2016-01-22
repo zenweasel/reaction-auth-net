@@ -1,14 +1,14 @@
 Package.describe({
   summary: "Reaction Authorize.net - Authorize.net payments for Reaction Commerce",
   name: "reactioncommerce:reaction-auth-net",
-  version: "0.5.0",
+  version: "0.5.1",
   git: "https://github.com/reactioncommerce/reaction-auth-net"
 });
 
 Npm.depends({"authorize-net": "1.0.6"});
 
-Package.onUse(function (api, where) {
-  api.versionsFrom("METEOR@1.2");
+Package.onUse(function (api) {
+  api.versionsFrom("METEOR@1.2.1");
 
   // meteor base packages
   api.use("standard-minifiers");
@@ -29,7 +29,7 @@ Package.onUse(function (api, where) {
   // meteor add-on packages
 
   api.use("less");
-  api.use("reactioncommerce:core@0.10.2");
+  api.use("reactioncommerce:core@0.11.0");
 
   api.addFiles("server/register.js", ["server"]); // register as a reaction package
   api.addFiles("server/authnet.js", ["server"]);
